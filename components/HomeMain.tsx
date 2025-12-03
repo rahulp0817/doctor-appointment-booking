@@ -19,6 +19,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { Calendar } from "./ui/calenderDate";
+import { toast } from "sonner";
 
 interface TimeSlot {
   start: string;
@@ -336,12 +337,10 @@ export default function HomeMain() {
         setConfirmation(conf);
         setStep(4);
       } else {
-        console.error("Booking failed:", data.error);
-        alert(`Booking failed: ${data.error}`);
+        toast.error(`Booking failed: ${data.error}`);
       }
     } catch (error) {
-      console.error("Error submitting booking:", error);
-      alert(
+      toast.error(
         "An error occurred while processing your booking. Please try again."
       );
     } finally {
