@@ -6,7 +6,7 @@ const CALENDLY_API_BASE = 'https://api.calendly.com';
 
 export const getCalendlyClient = (): AxiosInstance => {
   const accessToken = process.env.CALENDLY_ACCESS_TOKEN;
-  
+
   if (!accessToken) {
     throw new Error('CALENDLY_ACCESS_TOKEN is not set in environment variables');
   }
@@ -106,7 +106,7 @@ export async function getAvailability({
     const client = getCalendlyClient();
 
     const [year, month, day] = date.split('-').map(Number);
-    
+
     // Parse start and end times (default to full day)
     const [startHour = 0, startMinute = 0] = (startTime || '').split(':').map(Number);
     const [endHour = 23, endMinute = 59] = (endTime || '23:59').split(':').map(Number);
@@ -128,11 +128,11 @@ export async function getAvailability({
     });
 
     const slots = response.data.collection || [];
-    
+
     return slots.map((slot: any) => {
       const start = new Date(slot.start_time);
       const end = slot.end_time ? new Date(slot.end_time) : new Date(start.getTime() + 30 * 60000);
-      
+
       return {
         start: start.toISOString(),
         end: end.toISOString(),
@@ -167,10 +167,6 @@ export async function createBooking(eventTypeId: string, data: {
         timezone: data.timezone,
         text_reminder_number: data.phone
       },
-      questions_and_answers: data.notes ? [{
-        question: 'Additional notes',
-        answer: data.notes
-      }] : undefined
     });
 
     return response.data;
