@@ -119,9 +119,14 @@ export default function HomeMain() {
   }, []);
 
   const handleDateSelect = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const dateString = `${year}-${month}-${day}`;
+
     setFormData((prev) => ({
       ...prev,
-      preferredDate: date.toISOString().split("T")[0],
+      preferredDate: dateString,
     }));
   };
 
@@ -421,6 +426,12 @@ export default function HomeMain() {
     loadAvailability();
   }, []);
 
+  const parseDate = (dateString: string) => {
+    const [year, month, day] = dateString.split("-").map(Number);
+    // FIX: Create date in local timezone, not UTC
+    return new Date(year, month - 1, day, 0, 0, 0, 0);
+  };
+
   return (
     <div className="min-h-screen transition-colors mt-20 duration-300">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
@@ -544,7 +555,7 @@ export default function HomeMain() {
                   <Calendar
                     selectedDate={
                       formData.preferredDate
-                        ? new Date(formData.preferredDate)
+                        ? parseDate(formData.preferredDate)
                         : undefined
                     }
                     onDateSelect={handleDateSelect}
