@@ -110,7 +110,12 @@ All images are served from the `public/` directory.
 ![Confirmation Page](./public/image.png)
 
 ### Conformation Mail
+
 ![Conformation Mail](./public/Mailimage.png)
+
+### Calendly Scheduled Meetings
+
+![Calendly Mettings](./public/MeetingsCalendly.png)
 ---
 
 ## API Overview
